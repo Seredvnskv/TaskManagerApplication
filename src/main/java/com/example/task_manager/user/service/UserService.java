@@ -1,7 +1,9 @@
 package com.example.task_manager.user.service;
 
 import com.example.task_manager.user.User;
+import com.example.task_manager.user.dto.UpdateUserDTO;
 import com.example.task_manager.user.repository.UserRepository;
+import com.example.task_manager.user.role.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
@@ -34,8 +36,18 @@ public class UserService implements UserServiceInterface {
     }
 
     @Override
-    public User updateUser(UUID id, User userDetails) {
+    public User updateUser(User user, UpdateUserDTO updateUserDTO) {
+        if (updateUserDTO.getEmail() != null) {
+            user.setEmail(updateUserDTO.getEmail());
+        }
+        if (updateUserDTO.getUsername() != null) {
+            user.setUsername(updateUserDTO.getUsername());
+        }
+        if (updateUserDTO.getRole() != null) {
+            user.setRole(Role.valueOf(updateUserDTO.getRole()));
+        }
 
+        return userRepository.save(user);
     }
 
     @Override

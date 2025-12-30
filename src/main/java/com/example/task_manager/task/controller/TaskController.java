@@ -133,6 +133,19 @@ public class TaskController {
         return new ResponseEntity<>(readTaskDTO, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable("id") UUID id) {
+        Task task = taskService.getTaskById(id).orElse(null);
+
+        if (task == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else {
+            taskService.deleteTask(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+    }
+
     private void assignUsersToTask(Task task, List<UUID> userIds) {
         List<User> users = userIds.stream()
                 .map(uuid -> userService.getUserById(uuid).orElse(null))
