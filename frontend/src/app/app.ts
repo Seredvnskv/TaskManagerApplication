@@ -7,7 +7,7 @@ import {TaskListView} from './components/task_components/task-list-view/task-lis
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Main, Footer, TaskListView],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })

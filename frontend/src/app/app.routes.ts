@@ -2,11 +2,21 @@ import {RouterModule, Routes} from '@angular/router';
 import {TaskListView} from './components/task_components/task-list-view/task-list-view';
 import {NgModule} from '@angular/core';
 import {UserListView} from './components/user_components/user-list-view/user-list-view';
+import {TaskDetailsView} from './components/task_components/task-details-view/task-details-view';
 
 export const routes: Routes = [
   {
+    path: "",
+    redirectTo: "tasks",
+    pathMatch: "full"
+  },
+  {
     path: "tasks",
     component: TaskListView
+  },
+  {
+    path: "tasks/:id",
+    component: TaskDetailsView
   },
   {
     path: "users",

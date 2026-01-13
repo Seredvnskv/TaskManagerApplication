@@ -4,10 +4,11 @@ import {Task} from '../../../models/task/task';
 import { ChangeDetectorRef } from '@angular/core';
 import {TaskStatus} from '../../../models/enums/task_status/task-status';
 import { CommonModule } from '@angular/common';
+import {RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-task-list-view',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './task-list-view.html',
   styleUrl: './task-list-view.css',
 })

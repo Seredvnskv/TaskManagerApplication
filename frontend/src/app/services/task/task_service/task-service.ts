@@ -13,6 +13,11 @@ export class TaskService {
 
   getTasks(): Observable<Task[]> {
     return this.http.get<ReadTaskDTO[]>('api/tasks')
-      .pipe(map(response => this.TaskMapper.collectionDtoToEntity(response)))
+      .pipe(map(response => this.TaskMapper.collectionDtoToEntity(response)));
+  }
+
+  getTaskById(id: string) {
+    return this.http.get<ReadTaskDTO>('api/tasks/' + id)
+      .pipe(map(response => this.TaskMapper.toEntity(response)));
   }
 }
