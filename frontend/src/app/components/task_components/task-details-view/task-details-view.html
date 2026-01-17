@@ -1,17 +1,33 @@
-@if (task) {
-  <div class="task-details-card">
-    <h2 class="task-details-title">{{ task.title }}</h2>
-    <p class="task-details-description">{{ task.description }}</p>
-    <div class="task-details-meta">
-      <span class="task-details-creator">Created by: {{ task.createdBy }}</span>
-      <span class="task-details-due-date">Due: {{ task.dueDate | date:'short' }}</span>
-      <span class="task-details-status">Status: {{ task.status }}</span>
-    </div>
-<!--    <div class="task-details-actions">-->
-<!--      <button (click)="editTask()" class="edit-button">Edit Task</button>-->
-<!--      <button (click)="deleteTask()" class="delete-button">Delete Task</button>-->
-<!--    </div>-->
+@if (loading) {
+  <div class="loading">
+    Loading task...
   </div>
+}
+@else if (error) {
+  <div class="error">
+    {{ error }}
+  </div>
+}
+@else if (task) {
+  <section>
+    <div class="task-details-card">
+      <div class="return-button-container">
+        <button (click)="goBack()" class="return-button">←</button>
+      </div>
+
+      <h2 class="task-details-title">{{ task.title }}</h2>
+      <p class="task-details-description">{{ task.description }}</p>
+      <div class="task-details-meta">
+        <span class="task-details-creator">Created by: {{ task.createdBy }}</span>
+        <span class="task-details-due-date">Due: {{ task.dueDate | date:'short' }}</span>
+        <span class="task-details-status">Status: {{ task.status }}</span>
+      </div>
+      <div class="task-details-actions">
+        <button (click)="editTask()" class="edit-button">Edit Task</button>
+        <button (click)="deleteTask()" class="delete-button">Delete Task</button>
+      </div>
+    </div>
+  </section>
 }
 @else {
   <div class="no-task-selected">

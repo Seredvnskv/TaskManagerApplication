@@ -16,7 +16,7 @@ export class TaskMapper {
       id: dto.id,
       title: dto.title,
       description: dto.description,
-      status: TaskStatus[dto.status as keyof typeof TaskStatus],
+      status: dto.status as TaskStatus,
       createdBy: dto.createdBy,
       createdAt: new Date(dto.createdAt),
       updatedAt: new Date(dto.updatedAt),
@@ -29,11 +29,11 @@ export class TaskMapper {
       id: entity.id,
       title: entity.title,
       description: entity.description,
-      status: TaskStatus[entity.status],
+      status: entity.status,
       createdBy: entity.createdBy,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-      dueDate: entity.dueDate,
+      createdAt: entity.createdAt.toISOString(),
+      updatedAt: entity.updatedAt.toISOString(),
+      dueDate: entity.dueDate.toISOString(),
     };
   }
 

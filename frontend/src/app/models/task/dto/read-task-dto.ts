@@ -4,7 +4,7 @@ export interface ReadTaskDTO {
   description: string;
   status: string;
   createdBy: string;
-  createdAt: Date;
-  updatedAt: Date;
-  dueDate: Date;
+  createdAt: string;
+  updatedAt: string;
+  dueDate: string;
 }

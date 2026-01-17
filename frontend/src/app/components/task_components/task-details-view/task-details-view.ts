@@ -16,19 +16,52 @@ export class TaskDetailsView implements OnInit {
   constructor (private taskService: TaskService, private route: ActivatedRoute, private router: Router, private cdr: ChangeDetectorRef) {}
 
   task: Task | undefined;
+  loading = false;
+  error: string | null = null;
 
   ngOnInit() {
     this.loadTaskDetails();
-    this.cdr.detectChanges();
   }
 
   private loadTaskDetails() {
     this.route.params.subscribe(params => {
       const id = params['id'];
+      console.log('Task ID from route:', id);
 
-      this.taskService.getTaskById(id).subscribe(task => {
-        this.task = task;
+      if (!id) {
+        this.error = 'No task ID provided';
+        return;
+      }
+
+      this.loading = true;
+      this.error = null;
+
+      this.taskService.getTaskById(id).subscribe({
+        next: (task) => {
+          console.log('Task received:', task);
+          this.task = task;
+          this.loading = false;
+          this.cdr.detectChanges();
+        },
+        error: (error) => {
+          console.error('Error loading task:', error);
+          this.error = `Failed to load task: ${error.message || 'Unknown error'}`;
+          this.loading = false;
+          this.cdr.detectChanges();
+        }
       });
     })
+  }
+
+  protected editTask() {
+
+  }
+
+  protected deleteTask() {
+
+  }
+
+  protected goBack() {
+    this.router.navigate(['/tasks']);
   }
 }
