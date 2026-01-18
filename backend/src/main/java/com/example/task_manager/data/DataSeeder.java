@@ -1,5 +1,7 @@
 package com.example.task_manager.data;
 
+import com.example.task_manager.task.dto.ExportTaskDTO;
+import com.example.task_manager.task.mapper.TaskMapper;
 import com.example.task_manager.task.repository.TaskRepository;
 import com.example.task_manager.task.status.TaskStatus;
 import com.example.task_manager.user.repository.UserRepository;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.example.task_manager.task.Task;
 import com.example.task_manager.user.User;
 
+import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,8 @@ import java.util.Random;
 public class DataSeeder implements CommandLineRunner {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
+    private final FileService fileService;
+    private final TaskMapper taskMapper;
 
     private final List<Task> tasks = new ArrayList<>();
     private final List<User> users = new ArrayList<>();
@@ -28,9 +33,11 @@ public class DataSeeder implements CommandLineRunner {
     private final Random random = new Random();
 
     @Autowired
-    public DataSeeder(TaskRepository taskRepository, UserRepository userRepository) {
+    public DataSeeder(TaskRepository taskRepository, UserRepository userRepository, FileService fileService, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.userRepository = userRepository;
+        this.fileService = fileService;
+        this.taskMapper = taskMapper;
     }
 
     @Override
@@ -39,6 +46,12 @@ public class DataSeeder implements CommandLineRunner {
         seedUsers();
         seedTasks();
         System.out.println("Seeding completed.");
+
+        List<ExportTaskDTO> exportDTOs = taskMapper.toExportDTO(tasks);
+        fileService.writeToFile(exportDTOs, Path.of("src/main/resources/exported_tasks.json"));
+
+        List<ExportTaskDTO> importedDTOs = fileService.readFromFile(Path.of("src/main/resources/exported_tasks.json"), List.class);
+        System.out.println("Imported " + importedDTOs.size() + " tasks from JSON file.");
     }
 
     private void seedTasks() {
