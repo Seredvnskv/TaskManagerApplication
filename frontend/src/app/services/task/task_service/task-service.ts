@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 import {Task} from '../../../models/task/task';
 import {ReadTaskDTO} from '../../../models/task/dto/read-task-dto';
+import {UpdateTaskDTO} from '../../../models/task/dto/update-task-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,15 @@ export class TaskService {
 
   getTaskById(id: string) {
     return this.http.get<ReadTaskDTO>('api/tasks/' + id)
+      .pipe(map(response => this.TaskMapper.toEntity(response)));
+  }
+
+  deleteTask(id: string): Observable<void> {
+    return this.http.delete<void>('api/tasks/' + id);
+  }
+
+  updateTask(id: string, task: UpdateTaskDTO): Observable<Task> {
+    return this.http.patch<ReadTaskDTO>('api/tasks/' + id, task)
       .pipe(map(response => this.TaskMapper.toEntity(response)));
   }
 }

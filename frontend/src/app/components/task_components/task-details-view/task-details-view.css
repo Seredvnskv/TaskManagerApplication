@@ -89,6 +89,7 @@ section {
 
 .task-details-creator,
 .task-details-due-date,
+.task-details-update-date,
 .task-details-status {
   padding: 8px 12px;
   background-color: #f5f5f5;

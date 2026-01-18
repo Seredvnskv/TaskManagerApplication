@@ -54,11 +54,18 @@ export class TaskDetailsView implements OnInit {
   }
 
   protected editTask() {
-
+    if (this.task) {
+      this.router.navigate(['/tasks', this.task.id, 'edit']);
+    }
   }
 
-  protected deleteTask() {
-
+  protected deleteTask(id: string) {
+    this.taskService.deleteTask(id).subscribe(
+      () => {
+        console.log('Task deleted successfully');
+        this.goBack();
+      }
+    );
   }
 
   protected goBack() {

@@ -101,7 +101,8 @@
 }
 
 .task-creator,
-.task-due-date {
+.task-due-date,
+.task-update-date {
   display: flex;
   align-items: center;
 }

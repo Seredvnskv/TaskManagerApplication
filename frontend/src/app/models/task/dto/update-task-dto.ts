@@ -1,2 +1,6 @@
 export interface UpdateTaskDTO {
+  title?: string;
+  description?: string;
+  status?: string;
+  dueDate?: string;
 }
