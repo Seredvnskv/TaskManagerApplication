@@ -20,9 +20,11 @@ public class UserMapper {
 
     public ReadUserDTO toDTO(User user) {
         return new ReadUserDTO(
+                user.getId(),
                 user.getUsername(),
                 user.getEmail(),
-                user.getRole().toString()
+                user.getRole().toString(),
+                user.getCreatedAt()
         );
     }
 
