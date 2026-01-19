@@ -1,4 +1,93 @@
 <section class="task-board">
+  <div class="board-menu">
+    <button class="btn-add-task" [routerLink]="['/tasks/new']">
+      <i class="icon-plus">+</i> Add Task
+    </button>
+
+    <div class="task-filters">
+      <h3 class="filter-title">Filters</h3>
+
+      <div class="filter-group">
+        <label class="filter-label">Search</label>
+        <input
+          type="text"
+          class="filter-input"
+          placeholder="Search tasks..."
+          [(ngModel)]="filters.searchText"
+          (ngModelChange)="applyFilters()"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Status</label>
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="filters.showToDo"
+              (change)="applyFilters()"
+            />
+            <span class="checkbox-text">To Do</span>
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="filters.showInProgress"
+              (change)="applyFilters()"
+            />
+            <span class="checkbox-text">In Progress</span>
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [(ngModel)]="filters.showDone"
+              (change)="applyFilters()"
+            />
+            <span class="checkbox-text">Done</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Created By</label>
+        <select
+          class="filter-select"
+          [(ngModel)]="filters.user"
+          (change)="applyFilters()"
+        >
+          <option value="">All Users</option>
+          @for (user of users; track user) {
+            <option [value]="user.username">{{ user.username }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Due Date From</label>
+        <input
+          type="date"
+          class="filter-input"
+          [(ngModel)]="filters.dateFrom"
+          (ngModelChange)="applyFilters()"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label class="filter-label">Due Date To</label>
+        <input
+          type="date"
+          class="filter-input"
+          [(ngModel)]="filters.dateTo"
+          (ngModelChange)="applyFilters()"
+        />
+      </div>
+
+      <button class="btn-reset" (click)="resetFilters()">
+        Reset Filters
+      </button>
+    </div>
+  </div>
+
   <div class="task-column">
     <div class="column-header todo-header">
       <h2>To Do</h2>
