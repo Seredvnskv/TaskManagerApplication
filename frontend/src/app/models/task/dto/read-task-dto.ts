@@ -1,3 +1,5 @@
+import {User} from '../../user/user';
+
 export interface ReadTaskDTO {
   id: string;
   title: string;
@@ -7,4 +9,5 @@ export interface ReadTaskDTO {
   createdAt: string;
   updatedAt: string;
   dueDate: string;
+  assignedUsers: User[];
 }

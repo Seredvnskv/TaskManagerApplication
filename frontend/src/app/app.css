@@ -8,25 +8,4 @@
 html, body {
   height: 100%;
   margin: 0;
-  padding-bottom: 60px;
-}
-
-app-root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-app-root > div {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.task-list-container {
-  flex: 1;
-}
-
-app-footer {
-  margin-top: auto;
 }

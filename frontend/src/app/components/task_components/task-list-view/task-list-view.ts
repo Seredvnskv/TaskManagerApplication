@@ -8,10 +8,11 @@ import {RouterLink} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {User} from '../../../models/user/user';
 import {UserService} from '../../../services/user/user_service/user-service';
+import {Footer} from '../../../ui/component/footer/footer';
 
 @Component({
   selector: 'app-task-list-view',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, Footer],
   templateUrl: './task-list-view.html',
   styleUrl: './task-list-view.css',
 })

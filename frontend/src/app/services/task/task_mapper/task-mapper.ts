@@ -21,6 +21,7 @@ export class TaskMapper {
       createdAt: new Date(dto.createdAt),
       updatedAt: new Date(dto.updatedAt),
       dueDate: new Date(dto.dueDate),
+      assignedUsers: dto.assignedUsers
     };
   }
 
@@ -34,6 +35,7 @@ export class TaskMapper {
       createdAt: entity.createdAt.toISOString(),
       updatedAt: entity.updatedAt.toISOString(),
       dueDate: entity.dueDate.toISOString(),
+      assignedUsers: entity.assignedUsers
     };
   }
 

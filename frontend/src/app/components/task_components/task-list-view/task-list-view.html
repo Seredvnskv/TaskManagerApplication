@@ -1,9 +1,5 @@
 <section class="task-board">
   <div class="board-menu">
-    <button class="btn-add-task" [routerLink]="['/tasks/new']">
-      <i class="icon-plus">+</i> Add Task
-    </button>
-
     <div class="task-filters">
       <h3 class="filter-title">Filters</h3>
 
@@ -85,6 +81,10 @@
       <button class="btn-reset" (click)="resetFilters()">
         Reset Filters
       </button>
+
+      <button class="btn-add-task" [routerLink]="['/tasks/new']">
+        Add Task
+      </button>
     </div>
   </div>
 
@@ -105,9 +105,14 @@
             <h3 class="task-title">{{ task.title }}</h3>
             <p class="task-description">{{ task.description }}</p>
             <div class="task-meta">
-              <span class="task-creator">Created by: {{ task.createdBy }}</span>
-              <span class="task-due-date">Due: {{ task.dueDate | date:'short' }}</span>
-              <span class="task-update-date">Updated: {{ task.updatedAt | date:'short' }}</span>
+              <div class="task-users-info">
+                <span class="task-creator">Created by: {{ task.createdBy }}</span>
+                <span class="task-assignees">Assigned to: {{ task.assignedUsers.join(", ")}}</span>
+              </div>
+              <div class="task-dates-info">
+                <span class="task-due-date">Due: {{ task.dueDate | date:'short' }}</span>
+                <span class="task-update-date">Updated: {{ task.updatedAt | date:'short' }}</span>
+              </div>
             </div>
           </a>
         }
@@ -132,9 +137,14 @@
             <h3 class="task-title">{{ task.title }}</h3>
             <p class="task-description">{{ task.description }}</p>
             <div class="task-meta">
-              <span class="task-creator">Created by: {{ task.createdBy }}</span>
-              <span class="task-due-date">Due: {{ task.dueDate | date:'short' }}</span>
-              <span class="task-update-date">Updated: {{ task.updatedAt | date:'short' }}</span>
+              <div class="task-users-info">
+                <span class="task-creator">Created by: {{ task.createdBy }}</span>
+                <span class="task-assignees">Assigned to: {{ task.assignedUsers.join(", ")}}</span>
+              </div>
+              <div class="task-dates-info">
+                <span class="task-due-date">Due: {{ task.dueDate | date:'short' }}</span>
+                <span class="task-update-date">Updated: {{ task.updatedAt | date:'short' }}</span>
+              </div>
             </div>
           </a>
         }
@@ -159,9 +169,14 @@
             <h3 class="task-title">{{ task.title }}</h3>
             <p class="task-description">{{ task.description }}</p>
             <div class="task-meta">
-              <span class="task-creator">Created by: {{ task.createdBy }}</span>
-              <span class="task-due-date">Due: {{ task.dueDate | date:'short' }}</span>
-              <span class="task-update-date">Updated: {{ task.updatedAt | date:'short' }}</span>
+              <div class="task-users-info">
+                <span class="task-creator">Created by: {{ task.createdBy }}</span>
+                <span class="task-assignees">Assigned to: {{ task.assignedUsers.join(", ")}}</span>
+              </div>
+              <div class="task-dates-info">
+                <span class="task-due-date">Due: {{ task.dueDate | date:'short' }}</span>
+                <span class="task-update-date">Updated: {{ task.updatedAt | date:'short' }}</span>
+              </div>
             </div>
           </a>
         }
@@ -169,3 +184,4 @@
     </div>
   </div>
 </section>
+<app-footer />
