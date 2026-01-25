@@ -5,6 +5,7 @@ import {map, Observable} from 'rxjs';
 import {Task} from '../../../models/task/task';
 import {ReadTaskDTO} from '../../../models/task/dto/read-task-dto';
 import {UpdateTaskDTO} from '../../../models/task/dto/update-task-dto';
+import {CreateTaskDTO} from '../../../models/task/dto/create-task-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,11 @@ export class TaskService {
 
   updateTask(id: string, task: UpdateTaskDTO): Observable<Task> {
     return this.http.patch<ReadTaskDTO>('api/tasks/' + id, task)
+      .pipe(map(response => this.TaskMapper.toEntity(response)));
+  }
+
+  createTask(task: CreateTaskDTO): Observable<Task> {
+    return this.http.post<ReadTaskDTO>('api/tasks', task)
       .pipe(map(response => this.TaskMapper.toEntity(response)));
   }
 }

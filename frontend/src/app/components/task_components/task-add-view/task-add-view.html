@@ -1,0 +1,103 @@
+<section class="add-task-container">
+  <h2>Create New Task</h2>
+
+  <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+    <div class="form-group">
+      <label for="title">Title <span class="required">*</span></label>
+      <input
+        id="title"
+        formControlName="title"
+        type="text"
+        placeholder="Enter task title"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description <span class="required">*</span></label>
+      <textarea
+        id="description"
+        formControlName="description"
+        placeholder="Enter task description"
+        rows="4"
+        class="form-control"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="dueDate">Due Date <span class="required">*</span></label>
+      <input
+        id="dueDate"
+        type="datetime-local"
+        formControlName="dueDate"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label>Assign Users <span class="required">*</span></label>
+      <div class="user-selection">
+        @if (users && users.length > 0) {
+          <div class="user-checkboxes">
+            @for (user of users; track user.id) {
+              <label class="checkbox-label">
+                <input
+                  type="checkbox"
+                  [value]="user.id"
+                  (change)="onUserToggle(user.id, $event)"
+                  [checked]="isUserSelected(user.id)"
+                />
+                <span>{{ user.username }}</span>
+              </label>
+            }
+          </div>
+        } @else {
+          <p class="no-users">No users available</p>
+        }
+      </div>
+    </div>
+
+    @if (selectedUsers.length > 0) {
+      <div class="selected-users-section">
+        <h3>Selected Users ({{ selectedUsers.length }})</h3>
+        <div class="selected-users-list">
+          @for (user of selectedUsers; track user.id) {
+            <div class="selected-user-chip">
+              <span>{{ user.username }}</span>
+              <button
+                type="button"
+                class="remove-btn"
+                (click)="removeUser(user.id)"
+                title="Remove user"
+              >✕</button>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <div class="form-actions">
+      <div class="reset-section">
+        <button
+          type="button"
+          class="btn btn-reset"
+          (click)="resetForm()"
+        >Reset</button>
+      </div>
+
+      <div class="action-buttons">
+        <button
+          type="button"
+          class="btn btn-cancel"
+          routerLink="/tasks"
+        >Cancel</button>
+
+        <button
+          type="submit"
+          class="btn btn-create-task"
+          [disabled]="taskForm.invalid"
+        >Create Task</button>
+      </div>
+    </div>
+  </form>
+</section>
