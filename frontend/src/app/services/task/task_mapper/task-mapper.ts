@@ -4,6 +4,7 @@ import {TaskStatus} from '../../../models/enums/task_status/task-status';
 import {UserMapper} from '../../user/user_mapper/user-mapper';
 import {Injectable} from '@angular/core';
 import {UserService} from '../../user/user_service/user-service';
+import {ExportTaskDTO} from '../../../models/task/dto/export-task-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,22 @@ export class TaskMapper {
       dueDate: entity.dueDate.toISOString(),
       assignedUsers: entity.assignedUsers
     };
+  }
+
+  toExportDto(entity: Task) {
+    return {
+      id: entity.id,
+      title: entity.title,
+      description: entity.description,
+      status: entity.status,
+      createdAt: entity.createdAt.toISOString(),
+      updatedAt: entity.updatedAt.toISOString(),
+      dueDate: entity.dueDate.toISOString(),
+      createdById: this.userService.getUserByUsername(entity.createdBy).subscribe(user => user.id),
+      createdByUsername: entity.createdBy,
+      assignedUserIds: entity.assignedUsers.map(user => user.id),
+      assignedUsernames: entity.assignedUsers.map(user => user.username)
+    }
   }
 
   collectionDtoToEntity(dtos: ReadTaskDTO[]): Task[] {

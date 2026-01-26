@@ -6,6 +6,7 @@ import {Task} from '../../../models/task/task';
 import {ReadTaskDTO} from '../../../models/task/dto/read-task-dto';
 import {UpdateTaskDTO} from '../../../models/task/dto/update-task-dto';
 import {CreateTaskDTO} from '../../../models/task/dto/create-task-dto';
+import {ExportTaskDTO} from '../../../models/task/dto/export-task-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -35,5 +36,9 @@ export class TaskService {
   createTask(task: CreateTaskDTO): Observable<Task> {
     return this.http.post<ReadTaskDTO>('api/tasks', task)
       .pipe(map(response => this.TaskMapper.toEntity(response)));
+  }
+
+  exportTasks(): Observable<ExportTaskDTO[]> {
+    return this.http.get<ExportTaskDTO[]>('api/tasks/export');
   }
 }

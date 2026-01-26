@@ -54,6 +54,42 @@ export class TaskListView implements OnInit {
       });
   }
 
+  protected exportTasks() {
+    this.taskService.exportTasks().subscribe(tasks => {
+      const csv = this.convertToCSV(tasks);
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+
+      link.setAttribute('href', url);
+      link.setAttribute('download', `tasks_export_${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
+
+  private convertToCSV(tasks: any[]): string {
+    if (tasks.length === 0) return '';
+
+    const headers = Object.keys(tasks[0]);
+    const csvHeaders = headers.join(',');
+
+    const csvRows = tasks.map(task => {
+      return headers.map(header => {
+        const value = task[header];
+        if (Array.isArray(value)) {
+          return `"[${value.join(', ')}]"`;
+        }
+
+        return value;
+      }).join(',');
+    }).join('\n');
+
+    return `${csvHeaders}\n${csvRows}`;
+  }
+
   protected getTasksByStatus(status: TaskStatus): Task[] {
     if (!this.tasks) return [];
     return this.tasks.filter(task => task.status === status);

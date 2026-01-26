@@ -21,6 +21,10 @@ export const routes: Routes = [
     component: TaskAddView
   },
   {
+    path: "tasks/export",
+    component: TaskListView
+  },
+  {
     path: "tasks/:id",
     component: TaskDetailsView
   },
