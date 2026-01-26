@@ -17,6 +17,7 @@ import com.example.task_manager.user.User;
 import java.nio.file.Path;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -47,24 +48,27 @@ public class DataSeeder implements CommandLineRunner {
         seedTasks();
         System.out.println("Seeding completed.");
 
-        List<ExportTaskDTO> exportDTOs = taskMapper.toExportDTO(tasks);
-        fileService.writeToFile(exportDTOs, Path.of("src/main/resources/exported_tasks.json"));
-
-        List<ExportTaskDTO> importedDTOs = fileService.readFromFile(Path.of("src/main/resources/exported_tasks.json"), List.class);
-        System.out.println("Imported " + importedDTOs.size() + " tasks from JSON file.");
+//        List<ExportTaskDTO> exportDTOs = taskMapper.toExportDTO(tasks);
+//        fileService.writeToFile(exportDTOs, Path.of("src/main/resources/exported_tasks.json"));
+//
+//        List<ExportTaskDTO> importedDTOs = fileService.readFromFile(Path.of("src/main/resources/exported_tasks.json"), List.class);
+//        System.out.println("Imported " + importedDTOs.size() + " tasks from JSON file.");
     }
 
     private void seedTasks() {
         int numberOfTasksToSeed = 10;
+        List<User> copy = new ArrayList<>(users);
 
         for (int i = 1; i <= numberOfTasksToSeed; i++) {
+            Collections.shuffle(copy);
+
             Task task = Task.builder()
                     .title("Sample Task " + i)
                     .description("This is a description for Sample Task " + i)
                     .status(i % 2 == 0 ? TaskStatus.TODO : TaskStatus.IN_PROGRESS)
                     .dueDate(Instant.now().plusSeconds(86400L * (i + 7))) // i + 7 days from now
                     .createdBy(users.get(random.nextInt(users.size())))
-                    .assignedUsers(List.of(users.get(random.nextInt(users.size()))))
+                    .assignedUsers(List.of(users.get(random.nextInt(copy.size())), users.get(random.nextInt(copy.size()))))
                     .build();
 
             tasks.add(task);

@@ -2,6 +2,7 @@ package com.example.task_manager.task.controller;
 
 import com.example.task_manager.task.Task;
 import com.example.task_manager.task.dto.CreateTaskDTO;
+import com.example.task_manager.task.dto.ExportTaskDTO;
 import com.example.task_manager.task.dto.ReadTaskDTO;
 import com.example.task_manager.task.dto.UpdateTaskDTO;
 import com.example.task_manager.task.mapper.TaskMapper;
@@ -76,6 +77,18 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
             List<ReadTaskDTO> dtos = taskMapper.toDTO(tasks);
+            return new ResponseEntity<>(dtos, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/export")
+    public ResponseEntity<List<ExportTaskDTO>> exportTasks() {
+        List<Task> tasks = taskService.getAllTasks();
+
+        if (tasks.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            List<ExportTaskDTO> dtos = taskMapper.toExportDTO(tasks);
             return new ResponseEntity<>(dtos, HttpStatus.OK);
         }
     }
